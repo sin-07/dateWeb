@@ -1,22 +1,19 @@
 import { createContext, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import LoadingBar from "react-top-loading-bar";
 
 export const AppContext = createContext();
 
-export const AppContextProvider = ({ Children }) => {
+export const AppContextProvier = ({ children }) => {
   const [progress, setProgress] = useState(0);
+  const [user, setUser] = useState([]);
 
   return (
-    <AppContext.Provider value={{ progress, setProgress }}>
+    <AppContext.Provider value={{ progress, setProgress, user, setUser }}>
       <>
         <Toaster />
-        <LoadingBar
-          color="#f11946"
-          height={3}
-        />
-
-        <div>{Children}</div>
+        <LoadingBar color="black" height={3} />
+        <div>{children}</div>
       </>
     </AppContext.Provider>
   );

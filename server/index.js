@@ -8,6 +8,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const connectDb = require("./db/connection");
 const router = require("./routes/routes");
+require("dotenv").config();
 
 connectDb();
 
@@ -22,6 +23,7 @@ app.use(
     origin: "*",
   })
 );
+
 app.use(express.json());
 app.use("/api", router);
 
