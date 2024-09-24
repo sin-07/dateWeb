@@ -34,6 +34,6 @@ export const useUpload = async ({ image, onUploadProgress }) => {
     }
   };
 
-  const { public_id, url }= await upload()
-    return { public_id, url }
+  const { public_id, url } = await upload();
+  return { public_id, url };
 };

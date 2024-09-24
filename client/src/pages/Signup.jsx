@@ -4,78 +4,76 @@ import { useUpload } from "../hooks/useUpload";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const [image, setImage] = useState(null);
-  const { setProgress } = useContext(AppContext);
-  const navigate = useNavigate();
+  // const [image, setImage] = useState(null);
+  // const { setProgress } = useContext(AppContext);
+  // const navigate = useNavigate();
 
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const name = e.target.name.value;
+  //     const password = e.target.password.value;
+  //     const email = e.target.email.value;
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    try {
-      const name = e.target.name.value;
-      const password = e.target.password.value;
-      const email = e.target.email.value;
+  //     if (!name || !password || !email || !image) {
+  //       return toast.error("Please fill all the fields");
+  //     }
 
-      if (!name || !password || !email || !image) {
-        return toast.error("Please fill all the fields");
-      }
+  //     if (name.trim === "" || password.trim() === "" || email.trim === "") {
+  //       return toast.error("Please fill all the fields");
+  //     }
 
-      if (name.trim === "" || password.trim() === "" || email.trim === "") {
-        return toast.error("Please fill all the fields");
-      }
+  //     if (
+  //       name.length < 3 ||
+  //       (!email.includes("@") && !email.includes(".")) ||
+  //       password.length < 6
+  //     ) {
+  //       return toast.error("Invalid input");
+  //     }
 
-      if (
-        name.length < 3 ||
-        (!email.includes("@") && !email.includes(".")) ||
-        password.length < 6
-      ) {
-        return toast.error("Invalid input");
-      }
+  //     const { public_id, url } = await useUpload({ image, onUploadProgress });
+  //     if (!public_id || !url) {
+  //       toast.error("Failed to upload image");
+  //       return;
+  //     } else {
+  //       const res = await axios.post("http://localhost:5000/api/signup", {
+  //         name,
+  //         email,
+  //         password,
+  //         profile: url,
+  //         publicId: public_id,
+  //       });
 
-      const { public_id, url } = await useUpload({ image, onUploadProgress });
-      if (!public_id || !url) {
-        toast.error("Failed to upload image");
-        return;
-      } else {
-        const res = await axios.post("http://localhost:5000/api/signup", {
-          name,
-          email,
-          password,
-          profile: url,
-          publicId: public_id,
-        });
+  //       const data = await res.data;
+  //       if (data.success === true) {
+  //         toast.success(data.message);
+  //         e.target.reset();
+  //         navigate("/login");
+  //       } else {
+  //         toast.error(data.message);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
-        const data = await res.data;
-        if(data.success===true){
-          toast.success(data.message)
-          e.target.reset()
-          navigate("/login")
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file.size > 1000000) {
+  //     toast.error("Image size should be less than 1mb");
+  //   } else {
+  //     setImage(file);
+  //   }
+  // };
 
-        }else{
-          toast.error(data.message)
-        }
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const onUploadProgress = (progressEvent) => {
+  //   const progress = Math.round(
+  //     (100 * progressEvent.loaded) / progressEvent.total
+  //   );
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file.size > 1000000) {
-      toast.error("Image size should be less than 1mb");
-    } else {
-      setImage(file);
-    }
-  };
-
-  const onUploadProgress = (progressEvent) => {
-    const progress = Math.round(
-      (100 * progressEvent.loaded) / progressEvent.total
-    );
-
-    setProgress(progress);
-  };
+  //   setProgress(progress);
+  // };
 
   return (
     <>
