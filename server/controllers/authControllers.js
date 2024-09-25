@@ -39,7 +39,7 @@ const login = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "Invalid credentials" });
+        .json({ success: false, message: "User not found" });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
@@ -47,7 +47,9 @@ const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{
+      expiresIn: "1h",
+    });
 
     return res.status(200).json({
       success: true,
@@ -70,4 +72,24 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login };
+
+
+const checkAuth = async (req, res) => {
+  const reqId = req.id;
+  try {
+    const user = await User.findById(reqId).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+    return res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+
+module.exports = { signup, login, checkAuth };
