@@ -32,12 +32,42 @@ const signup = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid credentials" });
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
+    return res.status(200).json({
+      success: true,
+      message: "User logged in successfully",
+      token,
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        profile: user.profile,
+        publicId: user.publicId,
+        favourites: user.favourites,
+        disliked: user.dislikes,
+      },
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "internal Server error" });
+  }
+};
 
-
-
-
-
-
-
-module.exports = { signup };
+module.exports = { signup, login };
